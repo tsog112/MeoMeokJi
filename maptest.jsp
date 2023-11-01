@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,16 +34,32 @@
 selectMapList();
 
 //검색한 주소의 정보를 insertAddress 함수로 넘겨준다.
-function searchAddressToCoordinate(address) {
+function searchAddressToCoordinate(address) { 
     naver.maps.Service.geocode({
         query: address
-    }
+    }, function(status, response) {
+        if (status === naver.maps.Service.Status.ERROR) {
+            return alert('Something Wrong!');
+        }
+        if (response.v2.meta.totalCount === 0) {
+            return alert('올바른 주소를 입력해주세요.');
+        }
         var htmlAddresses = [],
             item = response.v2.addresses[0],
             point = new naver.maps.Point(item.x, item.y);
+        if (item.roadAddress) {
+            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+        }
+        if (item.jibunAddress) {
+            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+        }
+        if (item.englishAddress) {
+            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+        }
+
         insertAddress(item.roadAddress, item.x, item.y);
         
-    );
+    });
 }
 
 // 주소 검색의 이벤트

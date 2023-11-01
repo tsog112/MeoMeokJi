@@ -1,13 +1,13 @@
 package test1;
 
 public class RestaurantInfo {
-	String title;
-	String link;
-	String category;
-	String description;
-	String telephone;
-	String address;
-	String roadAddress;
+	private String title;
+	private String link;
+	private String category;
+	private String description;
+	private String telephone;
+	private String address;
+	private String roadAddress;
 	int mapx;
 	int mapy;
 	
@@ -64,9 +64,5 @@ public class RestaurantInfo {
 	}
 	public void setMapy(int mapy) {
 		this.mapy = mapy;
-	}
-	
-	public RestaurantInfo() {
-		
 	}
 }
